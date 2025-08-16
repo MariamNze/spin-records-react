@@ -30,15 +30,15 @@ const ProductList = () => {
         fetchProducts("");
     }, []);
 
-    if (loading) return <p>Loading...</p>;
+    if (loading) return <p>Chargement...</p>;
     if (error) return <p>{error}</p>;
 
     return (
         <Pages title="Spin Records - Produits">
             <h1>Nos Produits</h1>
-            <Grid container spacing={2}>
+            <Grid container spacing={2} size={{xs: 12, sm:6, md: 3}}>
                 {products.map((product) => (
-                    <Grid size={{xs: 12, md: 3}} key={product.id}>
+                    <Grid key={product.id}>
                         <ProductItem product={product} onAddToCart={() => {}}/>
                     </Grid>
                 ))}
