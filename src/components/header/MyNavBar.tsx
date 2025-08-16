@@ -1,11 +1,59 @@
 import React from 'react';
-import { Link as RouterLink } from 'react-router-dom';
-import {Box, AppBar, Toolbar, Typography, IconButton, MenuItem, Menu, Badge} from '@mui/material';
-import {AccountCircle,Menu as MenuIcon, ShoppingCart, MoreVert as MoreIcon} from '@mui/icons-material';
-import SearchInput from "./SearchInput.tsx";
+import {Box, AppBar, Toolbar, Typography, IconButton, MenuItem, Menu} from '@mui/material';
+import {Search as SearchIcon, AccountCircle, ShoppingCart, MoreVert as MoreIcon} from '@mui/icons-material';
+import {useNavigate} from "react-router";
+import {alpha, styled} from "@mui/material";
+import {InputBase} from "@mui/material";
 
+
+const Search = styled('div')(({theme}) => ({
+    position: 'relative',
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: alpha(theme.palette.common.white, 0.15),
+    '&:hover': {
+        backgroundColor: alpha(theme.palette.common.white, 0.25),
+    },
+    marginRight: theme.spacing(2),
+    marginLeft: 0,
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+        marginLeft: theme.spacing(3),
+        width: 'auto',
+    },
+}));
+
+const SearchIconWrapper = styled('div')(({theme}) => ({
+    padding: theme.spacing(0, 2),
+    height: '100%',
+    position: 'absolute',
+    pointerEvents: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+}));
+
+const StyledInputBase = styled(InputBase)(({theme}) => ({
+    color: 'inherit',
+    '& .MuiInputBase-input': {
+        padding: theme.spacing(1, 1, 1, 0),
+        // vertical padding + font size from searchIcon
+        paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+        transition: theme.transitions.create('width'),
+        width: '100%',
+        [theme.breakpoints.up('md')]: {
+            width: '20ch',
+        },
+    },
+}));
 
 const MyNavBar = () => {
+
+    const navigate = useNavigate();
+
+    const handleLogoClick = () => {
+        navigate("/");
+    };
+
 
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
@@ -48,8 +96,8 @@ const MyNavBar = () => {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-            <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+            <MenuItem onClick={handleMenuClose}>Account</MenuItem>
+            <MenuItem onClick={handleMenuClose}>Admin</MenuItem>
         </Menu>
     );
 
@@ -70,20 +118,7 @@ const MyNavBar = () => {
             open={isMobileMenuOpen}
             onClose={handleMobileMenuClose}
         >
-
             <MenuItem>
-                <IconButton
-                    size="large"
-                    aria-label="show 17 new notifications"
-                    color="inherit"
-                >
-                    <Badge badgeContent={17} color="error">
-                        <ShoppingCart/>
-                    </Badge>
-                </IconButton>
-                <p>Shopping Cart</p>
-            </MenuItem>
-            <MenuItem onClick={handleProfileMenuOpen}>
                 <IconButton
                     size="large"
                     aria-label="account of current user"
@@ -93,7 +128,13 @@ const MyNavBar = () => {
                 >
                     <AccountCircle/>
                 </IconButton>
-                <p>Profile</p>
+                <p>Account</p>
+            </MenuItem>
+            <MenuItem>
+                <IconButton>
+                    <ShoppingCart/>
+                </IconButton>
+                <p>Shopping Cart</p>
             </MenuItem>
         </Menu>
     );
@@ -102,32 +143,33 @@ const MyNavBar = () => {
         <Box sx={{flexGrow: 1}}>
             <AppBar position="static">
                 <Toolbar>
-                    <IconButton
-                        size="large"
-                        edge="start"
-                        color="inherit"
-                        aria-label="open drawer"
-                        sx={{mr: 2}}
-                    >
-                        <MenuIcon/>
-                    </IconButton>
-                    <Typography
-                        variant="h6"
-                        noWrap
-                        component="div"
-                        sx={{display: {xs: 'none', sm: 'block'}}}
-                    >
-                        Spin Records
-                    </Typography>
+                    <Box onClick={handleLogoClick}>
+                        <Typography
+                            variant="h6"
+                            noWrap
+                            component="div"
+                            sx={{display: {xs: 'none', sm: 'block'}}}
+                        >
+                            Spin Records
+                        </Typography>
+                    </Box>
 
-                    <SearchInput />
+                    <Search>
+                        <SearchIconWrapper>
+                            <SearchIcon/>
+                        </SearchIconWrapper>
+                        <StyledInputBase
+                            placeholder="Recherche…"
+                            inputProps={{'aria-label': 'search'}}
+                        />
+                    </Search>
 
                     <Box sx={{flexGrow: 1}}/>
                     <Box sx={{display: {xs: 'none', md: 'flex'}}}>
                         <IconButton
                             size="large"
                             edge="end"
-                            aria-label="account of current user"
+                            aria-label="account"
                             aria-controls={menuId}
                             aria-haspopup="true"
                             onClick={handleProfileMenuOpen}
@@ -137,13 +179,11 @@ const MyNavBar = () => {
                         </IconButton>
                         <IconButton
                             size="large"
-                            aria-label="show 2 new notifications"
+                            aria-label="show number of items in cart"
                             color="inherit"
-                            component={RouterLink} to="/cart"
+                            onClick={() => navigate('/cart')}
                         >
-                            <Badge badgeContent={2} color="error">
-                                <ShoppingCart/>
-                            </Badge>
+                            <ShoppingCart/>
                         </IconButton>
                     </Box>
                     <Box sx={{display: {xs: 'flex', md: 'none'}}}>
