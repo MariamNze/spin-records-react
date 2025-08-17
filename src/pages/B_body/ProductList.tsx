@@ -34,12 +34,12 @@ const ProductList = () => {
     if (error) return <p>{error}</p>;
 
     return (
-        <Pages title="Spin Records - Produits">
+        <Pages title="Nos Produits - Spin Records">
             <h1>Nos Produits</h1>
             <Grid container spacing={2} size={{xs: 12, sm:6, md: 3}}>
                 {products.map((product) => (
                     <Grid key={product.id}>
-                        <ProductItem product={product} onAddToCart={() => {}}/>
+                        <ProductItem product={product}/>
                     </Grid>
                 ))}
             </Grid>

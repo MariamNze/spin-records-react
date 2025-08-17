@@ -5,6 +5,7 @@ import {useEffect, useState} from "react";
 import {Alert, Box, Button, Chip, Container, Grid, IconButton, Snackbar, TextField, Typography} from "@mui/material";
 import {Add, ArrowBack, Remove, ShoppingCart} from "@mui/icons-material";
 import {getProductById} from "../api/productsApi.ts";
+import {useCart} from "../context/CartContext.tsx";
 
 
 const ProductDetails = () => {
@@ -14,7 +15,7 @@ const ProductDetails = () => {
     const [product, setProduct] = useState<any>(null); // Initialiser avec null pour attendre la réponse
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
-    // const {addToCart} = useCart();
+    const {addToCart} = useCart();
     const [quantity, setQuantity] = useState(1);
     const [snackbar, setSnackbar] = useState<{
         open: boolean;
@@ -77,7 +78,7 @@ const ProductDetails = () => {
 
     const handleAddToCart = () => {
         try {
-            // addToCart(product, quantity);
+            addToCart(product, quantity);
             setSnackbar({
                 open: true,
                 message: `${quantity} x ${product.title} ajouté au panier !`,
@@ -97,12 +98,12 @@ const ProductDetails = () => {
     };
 
     return (
-        <Pages title="Détails du Produit">
+        <Pages title="Détails du Produit - Spin Records">
 
             <Container maxWidth="lg" sx={{py: 4}}>
                 <Button
                     startIcon={<ArrowBack/>}
-                    onClick={() => navigate('/')}
+                    onClick={() => navigate("/")}
                     sx={{mb: 3}}
                 >
                     Retour

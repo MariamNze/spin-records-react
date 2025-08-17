@@ -8,10 +8,9 @@ const Header = () => {
     return (
         <>
             <MyNavBar/>
-            <Button component={RouterLink} to="/">Home</Button>
             <Button component={RouterLink} to="/products">Produits</Button>
+            <Button component={RouterLink} to="/cart">Panier</Button>
             <Button component={RouterLink} to="/orders">Commandes</Button>
-            <Button component={RouterLink} to="/admin">Admin</Button>
         </>
     );
 };

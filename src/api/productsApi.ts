@@ -1,9 +1,9 @@
 import {api} from "./api.ts";
 import type {Product} from "../types/product.type.ts";
 
-export const getAllProducts = async (query: string): Promise<Product[]> => {
+export const getAllProducts = async (keyword: string): Promise<Product[]> => {
     const response = await api.get("/products", {
-        params: { keyword: query }  // Paramètre de recherche (vide si non précisé)
+        params: {keyword}
     });
     return response.data;
 };
