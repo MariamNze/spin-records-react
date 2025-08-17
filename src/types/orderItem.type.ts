@@ -1,6 +1,7 @@
-import type {Product} from "./product.type.ts";
-
 export type OrderItem = {
-    product: Product;
+    productId: number;
+    title: string;
+    artist: string;
     quantity: number;
+    unitPrice: number;
 };
