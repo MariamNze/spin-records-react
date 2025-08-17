@@ -1,6 +1,6 @@
 import React from 'react';
 import {Box, AppBar, Toolbar, Typography, IconButton, MenuItem, Menu} from '@mui/material';
-import {Search as SearchIcon, AccountCircle, ShoppingCart, MoreVert as MoreIcon} from '@mui/icons-material';
+import {Search as SearchIcon, ShoppingCart, MoreVert as MoreIcon} from '@mui/icons-material';
 import {useNavigate} from "react-router";
 import {alpha, styled} from "@mui/material";
 import {InputBase} from "@mui/material";
@@ -62,10 +62,6 @@ const MyNavBar = () => {
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
-    const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
-        setAnchorEl(event.currentTarget);
-    };
-
     const handleMobileMenuClose = () => {
         setMobileMoreAnchorEl(null);
     };
@@ -118,19 +114,7 @@ const MyNavBar = () => {
             open={isMobileMenuOpen}
             onClose={handleMobileMenuClose}
         >
-            <MenuItem>
-                <IconButton
-                    size="large"
-                    aria-label="account of current user"
-                    aria-controls="primary-search-account-menu"
-                    aria-haspopup="true"
-                    color="inherit"
-                >
-                    <AccountCircle/>
-                </IconButton>
-                <p>Account</p>
-            </MenuItem>
-            <MenuItem>
+            <MenuItem onClick={() => navigate('/cart')}>
                 <IconButton>
                     <ShoppingCart/>
                 </IconButton>
@@ -166,17 +150,6 @@ const MyNavBar = () => {
 
                     <Box sx={{flexGrow: 1}}/>
                     <Box sx={{display: {xs: 'none', md: 'flex'}}}>
-                        <IconButton
-                            size="large"
-                            edge="end"
-                            aria-label="account"
-                            aria-controls={menuId}
-                            aria-haspopup="true"
-                            onClick={handleProfileMenuOpen}
-                            color="inherit"
-                        >
-                            <AccountCircle/>
-                        </IconButton>
                         <IconButton
                             size="large"
                             aria-label="show number of items in cart"

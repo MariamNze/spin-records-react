@@ -1,8 +1,8 @@
-import Pages from "../components/layout/Pages.tsx";
-import ProductItem from "../components/ProductItem.tsx";
+import Pages from "../../components/layout/Pages.tsx";
+import ProductItem from "../../components/ProductItem.tsx";
 import {useEffect, useState} from "react";
-import type {Product} from "../types/product.type.ts";
-import {getAllProducts} from "../api/productsApi.ts";
+import type {Product} from "../../types/product.type.ts";
+import {getAllProducts} from "../../api/productsApi.ts";
 import {Grid} from "@mui/material";
 
 const ProductList = () => {

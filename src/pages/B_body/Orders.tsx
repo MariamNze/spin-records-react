@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import Pages from "../components/layout/Pages";
-import type { Order } from "../types/order.type.ts";
-import { getOrdersByEmail } from "../api/ordersApi.ts";
+import Pages from "../../components/layout/Pages.tsx";
+import type { Order } from "../../types/order.type.ts";
+import { getOrdersByEmail } from "../../api/ordersApi.ts";
 import { TextField, Button, Table, TableHead, TableBody, TableRow, TableCell, Container, Typography } from "@mui/material";
 
 const Orders: React.FC  = () => {
@@ -15,11 +15,9 @@ const Orders: React.FC  = () => {
         setOrders(result);
     };
 
-
     return (
-        <Pages title="Commmandes | Admin - Spin Records">
-            <h1>Les Commandes</h1>
-
+        <Pages title="Historique des Commandes - Spin Records">
+            <h1>Historique des Commandes</h1>
 
             <Container>
                 <Typography variant="h4" gutterBottom>Recherche des commandes par e-mail</Typography>
@@ -27,9 +25,9 @@ const Orders: React.FC  = () => {
                 <TextField
                     label="Email du client"
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
                     variant="outlined"
                     sx={{ marginRight: 2 }}
+                    onChange={(e) => setEmail(e.target.value)}
                 />
                 <Button variant="contained" onClick={handleSearch}>Rechercher</Button>
 

@@ -1,4 +1,4 @@
-import Pages from "../components/layout/Pages.tsx";
+import Pages from "../../components/layout/Pages.tsx";
 import ProductList from "./ProductList.tsx";
 
 const Home = () => {

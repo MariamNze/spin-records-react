@@ -72,6 +72,7 @@ const ProductItem: React.FC<ProductItemProps> = ({product, onAddToCart}) => {
                 <Button
                     variant="contained"
                     size="small"
+
                     onClick={() => onAddToCart(product)}
                     disabled={isOutOfStock}
                 >

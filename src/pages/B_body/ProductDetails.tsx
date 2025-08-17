@@ -1,11 +1,11 @@
-import Pages from "../components/layout/Pages";
+import Pages from "../../components/layout/Pages.tsx";
 import {useParams} from "react-router-dom";
 import {useNavigate} from "react-router";
 import {useEffect, useState} from "react";
 import {Alert, Box, Button, Chip, Container, Grid, IconButton, Snackbar, TextField, Typography} from "@mui/material";
 import {Add, ArrowBack, Remove, ShoppingCart} from "@mui/icons-material";
-import {getProductById} from "../api/productsApi.ts";
-import {useCart} from "../context/CartContext.tsx";
+import {getProductById} from "../../api/productsApi.ts";
+import {useCart} from "../../context/CartContext.tsx";
 
 
 const ProductDetails = () => {

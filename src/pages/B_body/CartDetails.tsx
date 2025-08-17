@@ -1,5 +1,5 @@
-import Pages from "../components/layout/Pages";
-import {useCart} from "../context/CartContext.tsx";
+import Pages from "../../components/layout/Pages.tsx";
+import {useCart} from "../../context/CartContext.tsx";
 import {
     Alert, Box, Button,
     Container, IconButton, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
