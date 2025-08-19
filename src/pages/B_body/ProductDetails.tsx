@@ -142,9 +142,6 @@ const ProductDetails = () => {
                             <Typography variant="body1" sx={{mb: 3}}>
                                 {product.description}
                             </Typography>
-                            <Typography variant="body2" color="text.secondary" sx={{mb: 3}}>
-                                Stock: {product.stock} available
-                            </Typography>
                             {!isOutOfStock && (
                                 <Box sx={{mb: 3}}>
                                     <Typography variant="body1" sx={{mb: 1}}>

@@ -1,67 +1,93 @@
-import React, { useState } from 'react';
+import {Link as RouterLink} from "react-router-dom";
 import Pages from "../../components/layout/Pages.tsx";
-import { createOrder } from "../../api/ordersApi.ts";
 import {useCart} from "../../context/CartContext.tsx";
-import {Button, TextField, Typography} from "@mui/material";
+import {
+    Alert,
+    Button, IconButton,
+    Paper,
+    Stack,
+    Table, TableBody, TableCell,
+    TableContainer,
+    TableHead,
+    TableRow,
+    Typography
+} from "@mui/material";
+import { Delete as DeleteIcon } from "@mui/icons-material";
+import CartProductQuantity from "../../components/cart/CartProductQuantity.tsx";
 
 const CartDetails = () => {
 
-    const {cart, clearCart} = useCart();
-    const [email, setEmail] = useState('');
-    const [error, setError] = useState('');
-    const [success, setSuccess] = useState('');
+    const { cart, updateQuantity, removeFromCart, emptyCart, totalPrice } = useCart()
 
-    const handleValidateOrder = async () => {
-        if (!email) {
-            setError('Veuillez entrer votre email');
-            return;
-        }
-
-        try {
-            const orderItems = cart.map(item => ({productId: item.id, quantity: item.quantity}));
-            await createOrder(email, orderItems);
-            clearCart();
-            setSuccess("Commande validée !");
-            setError("");
-        } catch (err: any) {
-            setError(err.response?.data?.message || "Erreur lors de la validation de la commande");
-        }
-    };
+    const isEmpty = cart.length === 0;
 
     return (
-        <Pages title="Panier - Spin Records">
-            <Typography variant="h4" sx={{mb: 2}}>Panier</Typography>
+            <Pages title="Panier - Spin Records">
+                <Typography variant="h4" sx={{mb: 2}}>Panier</Typography>
 
-            {cart.length === 0 ? (
-                <Typography>Votre panier est vide</Typography>
+                {isEmpty ? (
+                <Alert severity="info">Votre panier est vide.</Alert>
             ) : (
-                <>
-                    <List>
-                        {cart.map(item => (
-                            <ListItem key={item.id}>
-                                <ListItemText primary={`${item.name} x ${item.quantity}`}
-                                              secondary={`${item.price * item.quantity} €`}/>
-                            </ListItem>
-                        ))}
-                    </List>
+                <Stack spacing={2}>
+                    <TableContainer component={Paper}>
+                        <Table>
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell>Produit</TableCell>
+                                    <TableCell>Quantité</TableCell>
+                                    <TableCell>Prix</TableCell>
+                                    <TableCell align="right">Total</TableCell>
+                                    <TableCell />
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {cart.map(({ productId, title, quantity, unitPrice }) => (
+                                    <TableRow key={productId}>
+                                        <TableCell>{title}</TableCell>
+                                        <TableCell>{unitPrice.toFixed(2)} €</TableCell>
+                                        <TableCell>
+                                            <CartProductQuantity
+                                                value={quantity}
+                                                onChange={(value) => updateQuantity(productId, value)}
+                                            />
+                                        </TableCell>
+                                        <TableCell align="right">
+                                            {(unitPrice * quantity)} €
+                                        </TableCell>
+                                        <TableCell align="right">
+                                            <IconButton onClick={() => removeFromCart(productId)}>
+                                                <DeleteIcon />
+                                            </IconButton>
+                                        </TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
 
-                    <TextField
-                        label="Email"
-                        value={email}
-                        onChange={e => setEmail(e.target.value)}
-                        style={{marginTop: '1rem', marginBottom: '1rem'}}
-                    />
-
-                    <Button variant="contained" onClick={handleValidateOrder}>Valider la commande</Button>
-
-                    {error && <Typography color="error">{error}</Typography>}
-                    {success && <Typography color="success.main">{success}</Typography>}
-                </>
+                    <Stack
+                        direction="row"
+                        justifyContent="space-between"
+                        alignItems="center"
+                    >
+                        <Button onClick={emptyCart}>Vider le panier</Button>
+                        <Stack direction="row" spacing={2} alignItems="center">
+                            <Typography variant="h6">
+                                Total: {totalPrice.toFixed(2)} €
+                            </Typography>
+                            <Button
+                                variant="contained"
+                                component={RouterLink}
+                                to="/checkout"
+                            >
+                                Acheter
+                            </Button>
+                        </Stack>
+                    </Stack>
+                </Stack>
             )}
-
-        </Pages>
-    )
-        ;
-};
+            </Pages>
+    );
+}
 
 export default CartDetails;
