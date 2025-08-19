@@ -3,7 +3,7 @@ import ProductItem from "../../components/ProductItem.tsx";
 import {useEffect, useState} from "react";
 import type {Product} from "../../types/product.type.ts";
 import {getAllProducts} from "../../api/productsApi.ts";
-import {Grid} from "@mui/material";
+import {CircularProgress, Grid} from "@mui/material";
 
 const ProductList = () => {
 
@@ -30,7 +30,7 @@ const ProductList = () => {
         fetchProducts("");
     }, []);
 
-    if (loading) return <p>Chargement...</p>;
+    if (loading) return <CircularProgress />;
     if (error) return <p>{error}</p>;
 
     return (

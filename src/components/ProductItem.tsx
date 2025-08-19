@@ -1,14 +1,13 @@
 import React from 'react';
-import {Button, Card, CardActions, CardContent, CardMedia, Chip, Typography} from "@mui/material";
+import {Card, CardContent, CardMedia, Chip, Typography} from "@mui/material";
 import {useNavigate} from "react-router";
 import type {Product} from "../types/product.type.ts";
 
 interface ProductItemProps {
     product: Product;
-    onAddToCart: (product: Product) => void;
 }
 
-const ProductItem: React.FC<ProductItemProps> = ({product, onAddToCart}) => {
+const ProductItem: React.FC<ProductItemProps> = ({product}) => {
 
     const navigate = useNavigate();
     const handleViewDetails = () => {
@@ -64,21 +63,7 @@ const ProductItem: React.FC<ProductItemProps> = ({product, onAddToCart}) => {
                 <Typography variant="body2" sx={{color: 'text.secondary'}}>
                     {product.price.toFixed(2)} €
                 </Typography>
-                <Typography variant="caption" color={product.stock > 0 ? 'success.main' : 'error.main'}>
-                    Stock: {product.stock}
-                </Typography>
             </CardContent>
-            <CardActions>
-                <Button
-                    variant="contained"
-                    size="small"
-
-                    onClick={() => onAddToCart(product)}
-                    disabled={isOutOfStock}
-                >
-                    Ajouter au panier
-                </Button>
-            </CardActions>
         </Card>
     );
 };
